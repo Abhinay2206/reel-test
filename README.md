@@ -16,6 +16,8 @@ Built with [Remotion](https://www.remotion.dev) (React → video). Every frame i
 | `ContextBridge-Promo-16x9.mp4`, `ContextBridge-Promo-9x16.mp4` | masters: H.264 CRF 17, 1080p60, AAC 320k (~48 MB each), for uploading to social platforms |
 | `ContextBridge-Promo-16x9-web.mp4`, `ContextBridge-Promo-9x16-web.mp4` | web versions: ~14 MB each, `faststart`, for the site's showreel |
 | `poster-16x9.jpg`, `poster-9x16.jpg` | poster frames (the logo reveal at 0:11.8) |
+| `cover-16x9.jpg`, `cover-9x16.jpg` | cover images (`npm run cover` re-renders them) |
+| `captions.md` | captions for Instagram, LinkedIn and X, with the research behind them |
 
 ## Story (beats land on the 120 BPM score)
 
