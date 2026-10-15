@@ -338,11 +338,11 @@ export const S7How: React.FC = () => {
           const lf = Math.max(0, f - (i === 0 ? 0 : bounds[i - 1] - 10));
           return (
             <AbsoluteFill key={S.n} style={{ transform: `translateY(${y}px)` }}>
-              <div style={{ position: "absolute", left: pick(150, 90), top: pick(0.3 * H, 0.12 * H) }}>
+              <div style={{ position: "absolute", left: pick(150, 90), top: pick(0.3 * H, 0.145 * H) }}>
                 <StepTitle lf={lf} n={S.n} a={S.a} b={S.b} size={pick(210, 190)} />
               </div>
-              <div style={{ position: "absolute", left: pick(0.5 * W, 0), top: pick(0, 0.44 * H), width: pick(0.5 * W, W), height: pick(H, 0.5 * H), display: "flex", alignItems: "center", justifyContent: pick("flex-start", "center") }}>
-                <div style={{ transform: `scale(${pick(1.22, 1.12)})`, transformOrigin: pick("0% 50%", "50% 50%") }}>
+              <div style={{ position: "absolute", left: pick(0.5 * W, 0), top: pick(0, 0.37 * H), width: pick(0.5 * W, W), height: pick(H, 0.4 * H), display: "flex", alignItems: "center", justifyContent: pick("flex-start", "center") }}>
+                <div style={{ transform: `scale(${pick(1.22, 1.0)})`, transformOrigin: pick("0% 50%", "50% 50%") }}>
                   <S.Viz lf={lf} W={W} H={H} portrait={portrait} />
                 </div>
               </div>

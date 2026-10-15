@@ -127,7 +127,7 @@ export const S22End: React.FC = () => {
           </div>
           <div style={{ marginTop: 14, fontFamily: F.mono, fontSize: pick(22, 21), color: C.mute, opacity: tw(f, 140, 24) }}>github.com/Abhinay2206/ContextBridge</div>
         </AbsoluteFill>
-        <AbsoluteFill style={{ alignItems: "center", justifyContent: "flex-end", paddingBottom: pick(0.08 * H, 0.08 * H) }}>
+        <AbsoluteFill style={{ alignItems: "center", justifyContent: "flex-end", paddingBottom: pick(0.08 * H, 0.23 * H) }}>
           <OrvantiaBuilds at={120} size={pick(70, 74)} dark={false} />
           <div style={{ fontFamily: F.mono, fontSize: 16, letterSpacing: "0.26em", textTransform: "uppercase", color: C.mute, marginTop: 18, opacity: tw(f, 146, 30) }}>
             Open source · MIT license · v{REPORT.version}

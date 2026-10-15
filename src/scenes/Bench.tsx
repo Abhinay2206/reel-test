@@ -117,9 +117,9 @@ export const S13Accuracy: React.FC = () => {
 export const S14Oracle: React.FC = () => {
   const f = useCurrentFrame();
   const { W, H, pick, pad } = useL();
-  const cols = pick(40, 25), rows = pick(20, 32);
-  const gw = pick(860, W - pad * 2), gh = (gw / cols) * rows;
-  const gx = pick(W - pad - gw, pad), gy = pick((H - gh) / 2 + 20, H * 0.4);
+  const cols = pick(40, 32), rows = pick(20, 25);
+  const gw = pick(860, 800), gh = (gw / cols) * rows;
+  const gx = pick(W - pad - gw, (W - gw) / 2), gy = pick((H - gh) / 2 + 20, H * 0.42);
   return (
     <Bg>
       <Glow color="rgba(5,150,105,0.12)" x={0.7} y={0.5} r={0.6} />
@@ -127,7 +127,7 @@ export const S14Oracle: React.FC = () => {
         <div style={{ position: "absolute", left: gx, top: gy, width: gw, height: gh }}>
           <DotSwarm cols={cols} rows={rows} w={gw} h={gh} p={map(f, 0, 66, 0, 1)} red={REPORT.fuzzRedTrial} redPop={tw(f, 70, 22)} spreadW={W} spreadH={H} ox={gx} oy={gy} />
         </div>
-        <div style={{ position: "absolute", left: pad, top: pick(0.26 * H, 0.1 * H), width: pick(700, W - pad * 2), color: C.ink }}>
+        <div style={{ position: "absolute", left: pad, top: pick(0.26 * H, 0.15 * H), width: pick(700, W - pad * 2), color: C.ink }}>
           <div style={{ ...mono(18), ...fadeUp(f, 0) }}>Randomized testing</div>
           <div style={{ marginTop: 10 }}>
             <Odometer text="99.9%" at={4} dur={60} stagger={5} style={serifStyle(pick(260, 240), { letterSpacing: "-0.05em" })} />
@@ -166,7 +166,7 @@ export const S15Speed: React.FC = () => {
       </AbsoluteFill>
       <Lens x={pick(30, 50)} y={pick(48, 26)} rx={pick(36, 60)} ry={pick(50, 26)} />
       <Cam z={map(f, 0, 120, 1.03, 1)}>
-        <div style={{ position: "absolute", left: pick(W - pad - r * 2 - 20, W / 2 - r), top: pick(H / 2 - r, H * 0.47), ...fadeUp(f, 0, 20, 30) }}>
+        <div style={{ position: "absolute", left: pick(W - pad - r * 2 - 20, W / 2 - r), top: pick(H / 2 - r, H * 0.45), ...fadeUp(f, 0, 20, 30) }}>
           <Dial r={r} p={p} value={REPORT.speedMs} max={200} />
           <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", color: C.ink }}>
             <div style={serifStyle(150, { letterSpacing: "-0.04em", lineHeight: 0.9 })}>
@@ -175,7 +175,7 @@ export const S15Speed: React.FC = () => {
             <div style={mono(20)}>milliseconds</div>
           </div>
         </div>
-        <div style={{ position: "absolute", left: pad, top: pick(0.32 * H, 0.12 * H), width: pick(760, W - pad * 2), color: C.ink }}>
+        <div style={{ position: "absolute", left: pad, top: pick(0.32 * H, 0.15 * H), width: pick(760, W - pad * 2), color: C.ink }}>
           <div style={{ ...mono(18, C.blue), ...fadeUp(f, 0) }}>Speed</div>
           <div style={{ ...serifStyle(pick(118, 104), { lineHeight: 0.98 }), marginTop: 18 }}>
             <MaskLine f={f} at={2}>To check</MaskLine>
@@ -270,7 +270,7 @@ export const S17Tokens: React.FC = () => {
 export const S18Growth: React.FC = () => {
   const f = useCurrentFrame();
   const { W, H, pick, pad } = useL();
-  const L = pad, R = W - pad - pick(190, 150), T = pick(0.4 * H, 0.32 * H), B = pick(0.86 * H, 0.84 * H);
+  const L = pad, R = W - pad - pick(190, 260), T = pick(0.4 * H, 0.36 * H), B = pick(0.86 * H, 0.745 * H);
   const lx = (n: number) => L + ((Math.log10(n) - 1) / 2) * (R - L);
   const ly = (v: number) => B - ((Math.log10(v) - 2) / 3) * (B - T);
   const draw = tw(f, 8, 64, easeInOut);
@@ -329,7 +329,7 @@ export const S18Growth: React.FC = () => {
             );
           })}
         </svg>
-        <div style={{ position: "absolute", left: pad, top: pick(0.1 * H, 0.1 * H), color: C.ink }}>
+        <div style={{ position: "absolute", left: pad, top: pick(0.1 * H, 0.15 * H), color: C.ink }}>
           <div style={{ ...mono(18, C.readyD), ...fadeUp(f, 0) }}>Growth with project size</div>
           <div style={{ ...serifStyle(pick(118, 104), { lineHeight: 0.96 }), marginTop: 16 }}>
             <MaskLine f={f} at={2}>Flat as your</MaskLine>
@@ -394,7 +394,7 @@ export const S19Secrets: React.FC = () => {
           </span>
         </div>
       </AbsoluteFill>
-      <div style={{ position: "absolute", left: 0, right: 0, bottom: pick(96, 120), overflow: "hidden", opacity: tw(f, 10, 20) * 0.8 }}>
+      <div style={{ position: "absolute", left: 0, right: 0, bottom: pick(96, 440), overflow: "hidden", opacity: tw(f, 10, 20) * 0.8 }}>
         <div style={{ display: "flex", gap: 34, whiteSpace: "nowrap", transform: `translateX(${-f * 6}px)`, ...mono(17, C.ink2, "0.1em") }}>
           {[...FORMATS, ...FORMATS].map((x, i) => (
             <span key={i} style={{ display: "inline-flex", alignItems: "center", gap: 34 }}>

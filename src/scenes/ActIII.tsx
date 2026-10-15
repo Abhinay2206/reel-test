@@ -38,13 +38,13 @@ export const S8Reality: React.FC = () => {
     <Bg>
       <Glow color="rgba(58,91,255,0.12)" x={0.5} y={0.62} r={0.6} />
       <Cam z={map(f, 0, 120, 1, 1.05)}>
-        <div style={{ position: "absolute", left: 0, right: 0, top: pick(0.1 * H, 0.12 * H), textAlign: "center", color: C.ink, ...serifStyle(pick(124, 108), { lineHeight: 0.95 }) }}>
+        <div style={{ position: "absolute", left: 0, right: 0, top: pick(0.1 * H, 0.15 * H), textAlign: "center", color: C.ink, ...serifStyle(pick(124, 108), { lineHeight: 0.95 }) }}>
           <MaskLine f={f} at={0}>Before any edit,</MaskLine>
           <MaskLine f={f} at={6}>
             it <It>checks reality.</It>
           </MaskLine>
         </div>
-        <div style={{ position: "absolute", left: "50%", top: pick(0.44 * H, 0.38 * H), transform: "translateX(-50%)", width: colW * 2 + 140 }}>
+        <div style={{ position: "absolute", left: "50%", top: pick(0.44 * H, 0.4 * H), transform: "translateX(-50%)", width: colW * 2 + 140 }}>
           <div style={{ display: "grid", gridTemplateColumns: `${colW}px 140px ${colW}px`, fontFamily: F.mono, fontSize: 18, letterSpacing: "0.3em", color: C.mute, marginBottom: 14, opacity: tw(f, 8, 16) }}>
             <span style={{ textAlign: "right" }}>CHECKPOINT</span>
             <span />
@@ -177,7 +177,7 @@ export const S9Verdicts: React.FC = () => {
           );
         })}
         {/* header: command, note, exit code */}
-        <div style={{ position: "absolute", left: 0, right: 0, top: pick(0.1 * H, 0.14 * H), textAlign: "center" }}>
+        <div style={{ position: "absolute", left: 0, right: 0, top: pick(0.1 * H, 0.15 * H), textAlign: "center" }}>
           <div style={{ fontFamily: F.mono, fontSize: 24, color: C.ink }}>
             <span style={{ color: C.signal }}>$ </span>
             {c.shown}
@@ -265,7 +265,7 @@ export const S11Provenance: React.FC = () => {
   const [sx, sy] = shake(f, 6, 26, 26, 2);
   const [sx2, sy2] = shake(f, 66, 10, 16, 4);
   const stampSize = pick(200, 132);
-  const item1Y = pick(0.44 * H, 0.42 * H), item2Y = pick(0.68 * H, 0.66 * H);
+  const item1Y = pick(0.44 * H, 0.4 * H), item2Y = pick(0.68 * H, 0.585 * H);
   const left = pick(150, 80);
   // stamp 1 travels from the centre of the frame to beside (16:9) or under (9:16) the first item
   const s1x = lerp(W / 2, pick(W * 0.76, W * 0.66), settle), s1y = lerp(H / 2, pick(item1Y + 40, item1Y + 200), settle);
@@ -276,7 +276,7 @@ export const S11Provenance: React.FC = () => {
     <Bg>
       <Glow color="rgba(5,150,105,0.14)" x={0.7} y={0.4} r={0.6} opacity={1 - settle * 0.5} />
       <Cam x={sx + sx2} y={sy + sy2} z={map(f, 0, 210, 1.02, 1)}>
-        <div style={{ position: "absolute", left, right: left, top: 0.1 * H, color: C.ink, ...serifStyle(pick(96, 84), { lineHeight: 1.0 }) }}>
+        <div style={{ position: "absolute", left, right: left, top: pick(0.1 * H, 0.15 * H), color: C.ink, ...serifStyle(pick(96, 84), { lineHeight: 1.0 }) }}>
           <MaskLine f={f} at={74}>
             Knows what is <It>proven.</It>
           </MaskLine>

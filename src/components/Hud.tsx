@@ -21,7 +21,8 @@ export const Hud: React.FC = () => {
   const { W, H, portrait } = useL();
   const endAt = TL.scenes.end[0];
   const vis = tw(f, 24, 30) * (1 - tw(f, endAt - 10, 20));
-  if (vis <= 0.001) return null;
+  // In 9:16 the corners and labels sit under Instagram's own UI, so the frame is landscape-only.
+  if (vis <= 0.001 || portrait) return null;
   const m = portrait ? 44 : 40;
   const len = 26;
   const chapter = [...CHAPTERS].reverse().find(([at]) => f >= at)!;

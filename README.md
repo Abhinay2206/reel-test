@@ -38,6 +38,10 @@ All figures come from the *ContextBridge Benchmark Report* (v0.3.3, 2026-10-12) 
 
 Light theme in the [contextbridge.orvantia.in](https://contextbridge.orvantia.in) palette (paper `#ece8df`, ink `#0c0e13`, signal `#ff4a1c`, the site's verdict greens, ambers and reds) and type (Instrument Serif, Inter, JetBrains Mono). The layouts are motion-first rather than copies of site sections: kinetic type, match cuts, odometers, reels and a viewfinder frame (crop marks, chapter label, timecode). Film grain, a warm vignette, soft light blooms and directional motion blur on pushes finish the look.
 
+## Instagram safe zones (9:16)
+
+Instagram covers the top and bottom of a Reel with its own UI and puts the like/comment/share column on the right. Sources disagree on exact margins, so the 9:16 layouts keep text between about 270 px from the top and 420 px from the bottom (y 270–1500 of 1920) and clear of the right-hand button column. The viewfinder frame is landscape-only. Full-bleed backgrounds (text wall, redaction rows) still run to the edges on purpose. Preview the upload in Instagram before posting, since the exact overlay varies by device.
+
 ## Sound
 
 `scripts/build_score.py` re-cuts the original promo music on its bar grid to fit 59 s (the last break and drop repeat once, so every edit lands on a downbeat) and layers synthesised sound design timed to scene frames: impacts on the drops, whooshes on pushes and morphs, stamp hits, reel locks, a shutter click, split-flap clatter, sparks, typing, and chimes in the track's key (A minor, ending on the outro's C add9). The result is `public/audio/score.flac`.
