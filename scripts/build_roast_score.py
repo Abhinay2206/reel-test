@@ -13,9 +13,13 @@ sys.path.insert(0, str(Path(__file__).parent))
 sys.argv = [sys.argv[0]]
 import build_score as B  # noqa: E402
 
-SR, DUR, FPS = B.SR, 35.0, 30
+SR, FPS = B.SR, 30
 rng = np.random.default_rng(1019)
 f = lambda fr: fr / FPS  # noqa: E731
+import json  # noqa: E402
+
+TL = json.load(open("src/roast/timeline.json"))
+DUR = TL["frames"] / FPS
 N = int(DUR * SR)
 
 
@@ -156,40 +160,62 @@ def backing():
     return out
 
 
+SC = TL["scenes"]
+S = lambda scene, local=0: SC[scene][0] + local  # noqa: E731  (frame of a scene-local offset)
+L = lambda lid, off=0: TL["lines"][lid]["start"] * FPS + off  # noqa: E731  (frame of a spoken line)
 CUES = []
 def cue(fr, snd, g=0.0):
     CUES.append((f(fr), snd, g))
 
 cue(3, boing(), -8)
-cue(70, record_scratch(), -7)
-cue(90, B.pop(900, 400, 0.08), -12); cue(110, B.pop(700, 300, 0.08), -12)
-cue(150, B.whoosh(0.3, 600, 4000, -0.5, 0.5, 0.6), -14)
-cue(172, B.pop(1200, 800, 0.07, 1.0), -9); cue(172, B.tick(1.0, 2400), -10)
-cue(180, B.pop(500, 260, 0.1), -11); cue(230, B.pop(650, 320, 0.09), -11)
-cue(255, B.whoosh(0.3, 500, 3500, 0.6, -0.4, 0.5), -14)
-cue(267, bus_horn(), -7); cue(269, B.impact(0.5), -12)
-cue(330, B.whoosh(0.3, 500, 3500, -0.6, 0.6, 0.5), -14)
-cue(360, B.pop(700, 340, 0.1), -10)
-cue(420, B.whoosh(0.3, 500, 3500, 0.6, -0.6, 0.5), -14)
-cue(466, bus_horn(), -7); cue(467, vine_boom(), -8)
-cue(510, B.whoosh(0.35, 500, 3000, 0.0, 0.0, 0.5), -14)
-for k, fr in enumerate((524, 542, 560, 578)):
-    cue(fr, B.tick(1.0, 1800 + 150 * k, 0.04), -9)
-cue(602, sad_trombone(), -7); cue(640, rimshot(), -8)
-cue(660, rewind(), -9); cue(720, B.whoosh(0.4, 3000, 400, 0.0, 0.0, 0.4), -16)
-cue(782, boing(), -8); cue(876, B.pop(500, 260, 0.1), -10)
-for k, fr in enumerate((940, 950, 960, 970)):
-    cue(fr, B.pop(900 - 80 * k, 450, 0.07), -11)
-cue(1004, B.impact(0.7), -8); cue(1004, airhorn(), -10); cue(1040, rimshot(), -9)
+cue(L("n2", -4), record_scratch(), -9)
+cue(L("n2", 8), B.pop(900, 400, 0.08), -12); cue(L("f1", 6), B.pop(700, 300, 0.08), -12)
+cue(L("f1", 40), rimshot(), -12)
+cue(S("v1"), B.whoosh(0.3, 600, 4000, -0.5, 0.5, 0.6), -14)
+cue(L("h1", 2), B.pop(1200, 800, 0.07, 1.0), -9); cue(L("h1", 2), B.tick(1.0, 2400), -10)
+cue(L("h1", 12), B.pop(500, 260, 0.1), -11); cue(L("h3", 10), B.pop(650, 320, 0.09), -11)
+cue(S("v2"), B.whoosh(0.3, 500, 3500, 0.6, -0.4, 0.5), -14)
+cue(L("b1", -8), bus_horn(), -10); cue(L("b1", 10), B.impact(0.5), -12)
+cue(L("h4", 50), rimshot(), -13)
+cue(S("v3"), B.whoosh(0.3, 500, 3500, -0.6, 0.6, 0.5), -14)
+cue(L("n4", 50), vine_boom(), -12)
+cue(S("v4"), B.whoosh(0.3, 500, 3500, 0.6, -0.6, 0.5), -14)
+cue(L("f2", 6), bus_horn(), -11); cue(L("f2", 7), vine_boom(), -12)
+cue(S("board"), B.whoosh(0.35, 500, 3000, 0.0, 0.0, 0.5), -14)
+for k, off in enumerate((14, 32, 50, 68)):
+    cue(S("board", off), B.tick(1.0, 1800 + 150 * k, 0.04), -9)
+cue(L("n5", 6), sad_trombone(), -9); cue(L("n5", 75), rimshot(), -11)
+cue(S("replay"), rewind(), -9); cue(L("h6", 50), B.whoosh(0.4, 3000, 400, 0.0, 0.0, 0.4), -16)
+cue(S("lake", 2), boing(), -8); cue(L("n6", 8), B.pop(500, 260, 0.1), -10)
+for k, off in enumerate((8, 17, 26, 35)):
+    cue(S("card", off), B.pop(900 - 80 * k, 450, 0.07), -11)
+cue(L("n7", 55), B.impact(0.7), -9); cue(L("n7", 55), airhorn(), -11); cue(L("n7", 95), rimshot(), -11)
+
+
+def voice_track():
+    out = np.zeros((N, 2))
+    for lid, info in TL["lines"].items():
+        raw = subprocess.run(["ffmpeg", "-v", "error", "-i", f"public/audio/voice/{lid}.wav", "-f", "f32le", "-ac", "1", "-ar", str(SR), "-"], capture_output=True, check=True).stdout
+        x = np.frombuffer(raw, dtype=np.float32)
+        x = x / (np.max(np.abs(x)) + 1e-9) * 0.9
+        i = int(info["start"] * SR)
+        m = min(len(x), N - i)
+        out[i : i + m] += B.pan(x[:m], {"n": 0.0, "h": -0.15, "b": 0.2, "f": 0.15, "m": 0.25}[info["voice"]])
+    return out
 
 
 def main():
-    mix = backing() * B.db(-12)
+    voice = voice_track()
+    # the backing loop and effects duck while someone is speaking
+    env = np.sqrt(signal.sosfilt(B.sos("lowpass", 6, 1), np.mean(voice**2, axis=1)) + 1e-12)
+    duck = 1 - 0.65 * np.clip(env / 0.12, 0, 1)
+    mix = backing() * B.db(-12) * duck[:, None]
     for at, snd, g in CUES:
         i = int(round(at * SR))
         m = min(len(snd), N - i)
         if m > 0:
-            mix[i : i + m] += snd[:m] * B.db(g)
+            mix[i : i + m] += snd[:m] * B.db(g) * (0.55 + 0.45 * duck[i : i + m, None])
+    mix += voice * B.db(1.5)
     mix /= np.max(np.abs(mix))
     mix = np.tanh(2.4 * mix) / np.tanh(2.4)
     mix = mix / np.max(np.abs(mix)) * B.db(-1.0)
